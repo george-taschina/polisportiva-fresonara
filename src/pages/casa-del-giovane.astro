@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import NewsCard from '../components/NewsCard.astro';
+import { getNewsByCategory } from '../lib/news';
+
+const iniziative = await getNewsByCategory('casa-del-giovane');
+
+const pillars = [
+  { title: 'Sport', text: 'Attività sportive gratuite e accessibili per i più giovani.' },
+  { title: 'Cultura', text: 'Doposcuola, laboratori e momenti di crescita educativa.' },
+  { title: 'Solidarietà', text: 'Sostegno alle famiglie e alle persone in difficoltà.' },
+  { title: 'Comunità', text: 'Spazi di aggregazione e iniziative aperte a tutto il paese.' },
+];
+---
+
+<BaseLayout
+  title="Casa del Giovane – Giorgio Deiana"
+  description="La Casa del Giovane Giorgio Deiana: storia, finalità e il progetto Sport, Cultura, Solidarietà e Comunità."
+>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Casa del Giovane"
+        title="Casa del Giovane – Giorgio Deiana"
+        description="Uno spazio della comunità per crescere insieme, dedicato alla memoria di Giorgio Deiana."
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>La struttura</h2>
+      <p>
+        La Casa del Giovane Giorgio Deiana è uno spazio dedicato ai giovani e alle famiglie di Fresonara,
+        nato dalla volontà della Polisportiva di mettere al centro le persone prima ancora dello sport.
+      </p>
+      <h2>Il progetto</h2>
+      <p>
+        La struttura promuove un progetto fondato su quattro pilastri — Sport, Cultura, Solidarietà e Comunità —
+        con attività pensate per favorire l'inclusione, la crescita educativa e la coesione sociale del territorio.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <SectionHeading eyebrow="I pilastri" title="Cosa facciamo" />
+      <div class="grid grid--3">
+        {pillars.map((p) => (
+          <div class="card">
+            <div class="panel">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Fotografie"
+        title="La struttura in immagini"
+        description="Presto online: le foto della Casa del Giovane e delle sue iniziative."
+      />
+      <div class="gallery">
+        <div class="gallery-ph">Foto in arrivo</div>
+        <div class="gallery-ph">Foto in arrivo</div>
+        <div class="gallery-ph">Foto in arrivo</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Iniziative"
+        title="Iniziative della Casa del Giovane"
+        description="Le ultime iniziative, aggiornate automaticamente dalla sezione News ed Eventi."
+      />
+      {iniziative.length > 0 ? (
+        <div class="grid grid--3">
+          {iniziative.map((entry) => (
+            <NewsCard entry={entry} />
+          ))}
+        </div>
+      ) : (
+        <p>Al momento non ci sono iniziative in evidenza. Torna presto!</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1rem;
+  }
+  .gallery-ph {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    background: var(--color-bg-soft);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,22 @@
+[
+  {
+    "nome": "Campo principale",
+    "tipo": "Campo da calcio",
+    "descrizione": "Campo in erba sintetica di ultima generazione, omologato per le partite ufficiali."
+  },
+  {
+    "nome": "Campo di allenamento",
+    "tipo": "Campo secondario",
+    "descrizione": "Spazio dedicato agli allenamenti delle squadre giovanili e alla preparazione atletica."
+  },
+  {
+    "nome": "Spogliatoi",
+    "tipo": "Servizi",
+    "descrizione": "Spogliatoi per atleti e arbitri con docce e servizi accessibili."
+  },
+  {
+    "nome": "Palazzetto polifunzionale",
+    "tipo": "Palestra",
+    "descrizione": "Struttura coperta per pallavolo, basket e attività ricreative al chiuso."
+  }
+]

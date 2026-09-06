@@ -1,0 +1,39 @@
+---
+import { getLatestNews } from '../lib/news';
+import NewsCard from './NewsCard.astro';
+import SectionHeading from './SectionHeading.astro';
+
+const items = await getLatestNews(3);
+---
+
+<section class="section">
+  <div class="container">
+    <SectionHeading
+      eyebrow="News"
+      title="Ultime notizie"
+      description="Le novità più recenti della Polisportiva e della Casa del Giovane."
+    />
+    <div class="grid grid--3">
+      {items.map((entry) => (
+        <NewsCard entry={entry} />
+      ))}
+    </div>
+    <p class="more">
+      <a href="/news/">Tutte le news ed eventi →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .more {
+    margin-top: 2rem;
+  }
+  .more a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .more a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import site from '../../data/site.json';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const { title, description, pubDate, category, eventDate, location } = entry.data;
+const isEvent = category === 'evento';
+
+const df = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const articleJsonLd = isEvent
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'SportsEvent',
+      name: title,
+      description,
+      startDate: eventDate?.toISOString(),
+      ...(location ? { location: { '@type': 'Place', name: location } } : {}),
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: title,
+      description,
+      datePublished: pubDate.toISOString(),
+      author: { '@type': 'Organization', name: site.name },
+    };
+---
+
+<BaseLayout title={title} description={description} type="article" jsonLd={articleJsonLd}>
+  <article class="section">
+    <div class="container prose">
+      <p class="article-meta">
+        {isEvent ? 'Evento' : 'Notizia'} · <time datetime={pubDate.toISOString()}>{df.format(pubDate)}</time>
+        {eventDate && ` · ${df.format(eventDate)}`}
+      </p>
+      <h1>{title}</h1>
+      <Content />
+      <p><a class="btn btn--ghost" href="/news/">← Tutte le news ed eventi</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-meta {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+  :global(.prose .btn) {
+    margin-top: 2.5rem;
+  }
+</style>

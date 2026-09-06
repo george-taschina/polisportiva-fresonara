@@ -1,0 +1,94 @@
+---
+import Nav from './Nav.astro';
+import SocialLinks from './SocialLinks.astro';
+import site from '../data/site.json';
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <p class="footer-brand">{site.name}</p>
+      <p class="footer-desc">{site.description}</p>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="footer-title">Sezioni</h2>
+      <Nav vertical />
+    </div>
+
+    <div class="footer-col">
+      <h2 class="footer-title">Contatti</h2>
+      <address>
+        {site.address.street}<br />
+        {site.address.zip} {site.address.city} ({site.address.province})
+      </address>
+      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></p>
+      <SocialLinks />
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© {new Date().getFullYear()} {site.name} — Tutti i diritti riservati</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-ink);
+    color: #cfe0d6;
+    margin-top: 3rem;
+  }
+  .footer-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+  .footer-brand {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-desc {
+    font-size: 0.9rem;
+    max-width: 30rem;
+  }
+  .footer-title {
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  address {
+    font-style: normal;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+  .footer-col p {
+    margin: 0 0 0.4rem;
+    font-size: 0.95rem;
+  }
+  a {
+    color: #cfe0d6;
+  }
+  a:hover {
+    color: #fff;
+  }
+  .footer-col :global(.nav-list a) {
+    color: #cfe0d6;
+  }
+  .footer-col :global(.nav-list a:hover),
+  .footer-col :global(.nav-list a.active) {
+    color: #fff;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-block: 1.25rem;
+    font-size: 0.85rem;
+  }
+</style>

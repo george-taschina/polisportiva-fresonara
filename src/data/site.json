@@ -1,0 +1,20 @@
+{
+  "name": "Polisportiva Fresonara",
+  "shortName": "Polisportiva",
+  "town": "Fresonara",
+  "description": "Società sportiva dilettantistica di Fresonara (AL): calcio, sport, cultura, solidarietà e comunità dal 1970.",
+  "founded": 1970,
+  "email": "info@polisportivafresonara.it",
+  "phone": "+39 000 000 0000",
+  "address": {
+    "street": "Via dello Sport, 1",
+    "zip": "15064",
+    "city": "Fresonara",
+    "province": "AL",
+    "country": "Italia"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/polisportivafresonara",
+    "instagram": "https://www.instagram.com/polisportivafresonara"
+  }
+}

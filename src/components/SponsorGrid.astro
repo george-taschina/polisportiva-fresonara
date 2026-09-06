@@ -1,0 +1,61 @@
+---
+import sponsors from '../data/sponsor.json';
+
+interface Props {
+  tipo?: 'sponsor' | 'partner';
+}
+
+const { tipo } = Astro.props;
+const items = tipo ? sponsors.filter((s) => s.tipo === tipo) : sponsors;
+---
+
+<ul class="sponsor-grid">
+  {items.map((s) => (
+    <li class="sponsor-item">
+      <a href={s.url} target="_blank" rel="noopener noreferrer">
+        <span class="sponsor-name">{s.nome}</span>
+        <span class="sponsor-type">{s.tipo === 'partner' ? 'Partner' : 'Sponsor'}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .sponsor-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  }
+  .sponsor-item a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    min-height: 7rem;
+    padding: 1.25rem;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-bg);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .sponsor-item a:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .sponsor-name {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .sponsor-type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+  }
+</style>

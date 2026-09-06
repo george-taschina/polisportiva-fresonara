@@ -1,0 +1,6 @@
+[
+  { "nome": "Nome Sponsor 1", "tipo": "sponsor", "url": "https://example.com" },
+  { "nome": "Nome Sponsor 2", "tipo": "sponsor", "url": "https://example.com" },
+  { "nome": "Nome Partner 1", "tipo": "partner", "url": "https://example.com" },
+  { "nome": "Nome Partner 2", "tipo": "partner", "url": "https://example.com" }
+]

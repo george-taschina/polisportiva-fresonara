@@ -1,0 +1,216 @@
+---
+import { getUpcomingEvents } from '../lib/news';
+import site from '../data/site.json';
+
+const [nextEvent] = await getUpcomingEvents(1);
+
+const dayFmt = new Intl.DateTimeFormat('it-IT', { day: 'numeric' });
+const monthFmt = new Intl.DateTimeFormat('it-IT', { month: 'short' });
+const fullFmt = new Intl.DateTimeFormat('it-IT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<section class:list={['hero', { 'hero--with-event': nextEvent }]}>
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="container hero-inner">
+    <p class="hero-eyebrow">
+      Società sportiva dilettantistica — {site.address.city} ({site.address.province})
+    </p>
+    <h1>{site.name}</h1>
+    <p class="hero-lead">{site.description}</p>
+    <div class="hero-actions">
+      <a class="btn btn--primary" href="/news/">Scopri news ed eventi</a>
+      <a class="btn btn--ghost" href="/contatti/">Sostienici</a>
+    </div>
+  </div>
+
+  {nextEvent && (
+    <div class="container hero-event-wrap">
+      <article class="hero-event">
+        <a class="hero-event-link" href={`/news/${nextEvent.id}/`}>
+          <div class="hero-event-date">
+            <span class="d">{nextEvent.data.eventDate ? dayFmt.format(nextEvent.data.eventDate) : ''}</span>
+            <span class="m">{nextEvent.data.eventDate ? monthFmt.format(nextEvent.data.eventDate) : ''}</span>
+          </div>
+          <div class="hero-event-body">
+            <span class="hero-event-label">Prossimo evento</span>
+            <h2 class="hero-event-title">{nextEvent.data.title}</h2>
+            <p class="hero-event-meta">
+              {nextEvent.data.eventDate && fullFmt.format(nextEvent.data.eventDate)}
+              {nextEvent.data.location && ` · ${nextEvent.data.location}`}
+            </p>
+          </div>
+          <span class="hero-event-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+    </div>
+  )}
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    color: #fff;
+    padding-top: clamp(4.5rem, 12vw, 8rem);
+    padding-bottom: clamp(6rem, 14vw, 10rem);
+  }
+  .hero--with-event {
+    /* Room below the CTAs so the card sits clear of them (mobile first) */
+    padding-bottom: clamp(6rem, 14vw, 10rem);
+  }
+  /* Space between the CTAs and the card */
+  .hero--with-event .hero-event-wrap {
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 641px) {
+    .hero--with-event .hero-event-wrap {
+      margin-top: 3rem;
+    }
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(13, 69, 43, 0.72) 0%, rgba(13, 69, 43, 0.45) 45%, rgba(13, 69, 43, 0.85) 100%),
+      radial-gradient(900px 400px at 20% 15%, rgba(245, 166, 35, 0.25), transparent 60%),
+      linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 55%, #1b7a4e 100%);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 48px 48px,
+      linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 48px 48px;
+    mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+    opacity: 0.5;
+  }
+  .hero-inner {
+    position: relative;
+    max-width: 46rem;
+  }
+  /* Same width as .hero-inner so the card's left edge aligns with the hero text */
+  .hero-event-wrap {
+    max-width: 46rem;
+  }
+  .hero-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    color: #fff;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    letter-spacing: -0.03em;
+  }
+  .hero-lead {
+    max-width: 42ch;
+    font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+    opacity: 0.95;
+    margin-top: 1.25rem;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+  .hero :global(.btn--primary) {
+    background: #fff;
+    color: var(--color-primary-dark);
+  }
+  .hero :global(.btn--ghost) {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+  .hero :global(.btn--ghost:hover) {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Next-event card — sits below the hero CTAs, inside the hero */
+  .hero-event {
+    /* Own stacking layer: paints above .hero-bg and the next section,
+       so the overlapping card is never clipped or hidden. */
+    position: relative;
+    z-index: 1;
+    max-width: 34rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .hero-event-link {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.4rem 1.5rem;
+    background: #fff;
+    color: var(--color-ink);
+    text-decoration: none;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+  }
+  .hero-event-date {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 4.75rem;
+    padding: 0.75rem 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    color: #fff;
+    line-height: 1;
+  }
+  .hero-event-date .d {
+    font-size: 1.75rem;
+    font-weight: 800;
+  }
+  .hero-event-date .m {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.9;
+    margin-top: 0.15rem;
+  }
+  .hero-event-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin-bottom: 0.2rem;
+  }
+  .hero-event-title {
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+  .hero-event-meta {
+    margin-top: 0.3rem;
+    font-size: 0.88rem;
+    color: var(--color-muted);
+  }
+  .hero-event-arrow {
+    margin-left: auto;
+    flex-shrink: 0;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  /* Mobile first: extra vertical room in the hero */
+  @media (max-width: 640px) {
+    .hero {
+      padding-bottom: clamp(7rem, 22vw, 9rem);
+    }
+  }
+</style>

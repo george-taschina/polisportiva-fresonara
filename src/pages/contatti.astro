@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import SponsorGrid from '../components/SponsorGrid.astro';
+import site from '../data/site.json';
+
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `${site.address.street}, ${site.address.zip} ${site.address.city} ${site.address.province}`,
+)}`;
+---
+
+<BaseLayout
+  title="Contatti e Sostegno"
+  description="Contatti, orari e informazioni per diventare sponsor, fare una donazione o collaborare con la Polisportiva Fresonara."
+>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Resta in contatto"
+        title="Contatti e Sostegno"
+        description="Telefono, e-mail, sede e informazioni per chi vuole sostenere la Polisportiva."
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+        <div class="card"><div class="panel">
+          <h3>Telefono</h3>
+          <p><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></p>
+        </div></div>
+        <div class="card"><div class="panel">
+          <h3>E-mail</h3>
+          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        </div></div>
+        <div class="card"><div class="panel">
+          <h3>Sede</h3>
+          <p>{site.address.street}<br />{site.address.zip} {site.address.city} ({site.address.province})</p>
+          <p><a href={mapsUrl} target="_blank" rel="noopener noreferrer">Apri in Google Maps →</a></p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container prose">
+      <SectionHeading eyebrow="Seguici" title="Social" description="Seguici su Facebook e Instagram per restare aggiornato." />
+      <SocialLinks />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <SectionHeading
+        eyebrow="Sostienici"
+        title="Sponsor, donazioni e volontariato"
+        description="Il tuo aiuto fa la differenza per lo sport e la comunità di Fresonara."
+      />
+      <h2>Diventa sponsor</h2>
+      <p>
+        La tua azienda può affiancare la Polisportiva come sponsor o partner, sostenendo le attività sportive
+        e ottenendo visibilità sul territorio. Contattaci per conoscere le modalità.
+      </p>
+      <h2>Fai una donazione</h2>
+      <p>
+        Ogni contributo, anche piccolo, è destinato ai progetti sportivi e sociali della Polisportiva
+        e della Casa del Giovane.
+      </p>
+      <h2>Collabora con noi</h2>
+      <p>
+        Vuoi dare una mano come volontario, allenatore o organizzatore? Scrivici: c'è sempre spazio
+        per chi ha voglia di mettersi in gioco.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <SectionHeading eyebrow="Chi ci sostiene" title="Sponsor e Partner" />
+      <SponsorGrid />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .card a {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+</style>

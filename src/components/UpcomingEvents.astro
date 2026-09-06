@@ -1,0 +1,42 @@
+---
+import { getUpcomingEvents } from '../lib/news';
+import EventCard from './EventCard.astro';
+import SectionHeading from './SectionHeading.astro';
+
+const items = await getUpcomingEvents(3);
+---
+
+{items.length > 0 && (
+  <section class="section section--soft">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Agenda"
+        title="Prossimi eventi"
+        description="Gli appuntamenti in programma: tornei, iniziative e momenti di comunità."
+      />
+      <div class="grid grid--3">
+        {items.map((entry) => (
+          <EventCard entry={entry} />
+        ))}
+      </div>
+      <p class="more">
+        <a href="/news/">Tutti gli eventi →</a>
+      </p>
+    </div>
+  </section>
+)}
+
+<style>
+  .more {
+    margin-top: 2rem;
+  }
+  .more a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .more a:hover {
+    text-decoration: underline;
+  }
+</style>
+

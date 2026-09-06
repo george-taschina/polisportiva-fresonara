@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { getAllNews } from '../../lib/news';
+
+const all = await getAllNews();
+const [latest, ...rest] = all;
+
+const labels: Record<string, string> = {
+  news: 'Notizia',
+  evento: 'Evento',
+  'casa-del-giovane': 'Casa del Giovane',
+};
+
+const df = new Intl.DateTimeFormat('it-IT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout
+  title="News ed Eventi"
+  description="Le ultime notizie e i prossimi eventi della Polisportiva Fresonara e della Casa del Giovane Giorgio Deiana."
+>
+  {latest ? (
+    <section class="news-hero">
+      <div class="news-hero-bg" aria-hidden="true"></div>
+      <div class="container news-hero-inner">
+        <p class="news-hero-eyebrow">
+          <span class={`badge badge--${latest.data.category}`}>
+            {labels[latest.data.category]}
+          </span>
+          Ultima news
+        </p>
+        <h1>{latest.data.title}</h1>
+        <p class="news-hero-lead">{latest.data.description}</p>
+        <p class="news-hero-meta">
+          Pubblicato il {df.format(latest.data.pubDate)}
+          {latest.data.eventDate && ` · In programma il ${df.format(latest.data.eventDate)}`}
+          {latest.data.location && ` · ${latest.data.location}`}
+        </p>
+        <div class="news-hero-actions">
+          <a class="btn btn--primary" href={`/news/${latest.id}/`}>Leggi l'articolo</a>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="page-hero">
+      <div class="container">
+        <SectionHeading
+          eyebrow="Aggiornamenti"
+          title="News ed Eventi"
+          description="Tutte le novità della Polisportiva e della Casa del Giovane, in un'unica sezione sempre aggiornata."
+        />
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      {rest.length > 0 ? (
+        <div class="grid grid--3">
+          {rest.map((entry) => (
+            <NewsCard entry={entry} />
+          ))}
+        </div>
+      ) : (
+        !latest && <p>Al momento non ci sono notizie. Torna presto!</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .news-hero {
+    position: relative;
+    color: #fff;
+    padding-block: clamp(4.5rem, 12vw, 8rem);
+  }
+  .news-hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(13, 69, 43, 0.72) 0%, rgba(13, 69, 43, 0.45) 45%, rgba(13, 69, 43, 0.85) 100%),
+      radial-gradient(900px 400px at 20% 15%, rgba(245, 166, 35, 0.25), transparent 60%),
+      linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 55%, #1b7a4e 100%);
+  }
+  .news-hero-inner {
+    position: relative;
+    max-width: 46rem;
+  }
+  .news-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    color: #fff;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: -0.03em;
+  }
+  .news-hero-lead {
+    max-width: 42ch;
+    font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+    opacity: 0.95;
+    margin-top: 1.25rem;
+  }
+  .news-hero-meta {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+  .news-hero-actions {
+    margin-top: 2.25rem;
+  }
+  .news-hero .btn--primary {
+    background: #fff;
+    color: var(--color-primary-dark);
+  }
+</style>

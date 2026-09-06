@@ -1,0 +1,30 @@
+[
+  {
+    "nome": "Calcio",
+    "descrizione": "Scuola calcio e attività agonistica per tutte le età, dal settore giovanile alla prima squadra.",
+    "orari": ["Lunedì 17:30 – 19:30", "Mercoledì 17:30 – 19:30", "Venerdì 17:30 – 19:30"],
+    "fasciaEta": "6 – 18 anni e adulti",
+    "luogo": "Campi sportivi"
+  },
+  {
+    "nome": "Pallavolo",
+    "descrizione": "Corsi e squadre amatoriali di pallavolo, con allenamenti guidati da istruttori qualificati.",
+    "orari": ["Martedì 20:00 – 22:00", "Giovedì 20:00 – 22:00"],
+    "fasciaEta": "12 anni in su",
+    "luogo": "Palazzetto polifunzionale"
+  },
+  {
+    "nome": "Bocce",
+    "descrizione": "Attività di bocce aperta a tutti, con momenti di aggregazione e tornei amatoriali.",
+    "orari": ["Sabato 15:00 – 18:00", "Domenica 15:00 – 18:00"],
+    "fasciaEta": "Tutte le età",
+    "luogo": "Campo bocce"
+  },
+  {
+    "nome": "Attività ricreative",
+    "descrizione": "Progetti di aggregazione, doposcuola e attività per la comunità in collaborazione con la Casa del Giovane.",
+    "orari": ["Su prenotazione"],
+    "fasciaEta": "Tutte le età",
+    "luogo": "Casa del Giovane"
+  }
+]

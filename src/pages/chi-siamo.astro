@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import consiglio from '../data/consiglio-direttivo.json';
+import presidenti from '../data/presidenti-onorari.json';
+import site from '../data/site.json';
+
+const documents = [
+  { label: 'Statuto sociale', note: '(PDF)' },
+  { label: 'Regolamento interno', note: '(PDF)' },
+  { label: 'Bilancio sociale', note: '(PDF)' },
+];
+---
+
+<BaseLayout
+  title="La Polisportiva — Chi siamo"
+  description="La Polisportiva Fresonara: storia, consiglio direttivo, presidenti onorari e documenti principali della società."
+>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Il Club"
+        title="La Polisportiva"
+        description="Dal 1970 al servizio dello sport e della comunità di Fresonara."
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>Chi siamo</h2>
+      <p>
+        La {site.name} è una società sportiva dilettantistica con sede a {site.address.city} ({site.address.province}).
+        Nasce con l'obiettivo di promuovere lo sport come strumento di crescita, aggregazione e inclusione per tutte le età.
+      </p>
+
+      <h2>La nostra storia</h2>
+      <p>
+        Fondata nel {site.founded}, la Polisportiva accompagna da oltre cinquant'anni la vita sportiva e sociale del paese,
+        crescendo insieme alle generazioni di atleti e volontari che ne hanno fatto la storia.
+      </p>
+
+      <h2>Consiglio Direttivo</h2>
+      <ul>
+        {consiglio.map((m) => (
+          <li><strong>{m.nome}</strong> — {m.ruolo}</li>
+        ))}
+      </ul>
+
+      <h2>Presidenti Onorari</h2>
+      <ul>
+        {presidenti.map((p) => (
+          <li><strong>{p.nome}</strong>{p.periodo && ` — ${p.periodo}`}</li>
+        ))}
+      </ul>
+
+      <h2>Documenti</h2>
+      <ul>
+        {documents.map((d) => (
+          <li>{d.label} {d.note}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

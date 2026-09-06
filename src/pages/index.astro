@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import UpcomingEvents from '../components/UpcomingEvents.astro';
+import LatestNews from '../components/LatestNews.astro';
+import site from '../data/site.json';
+
+const pillars = [
+  { href: '/chi-siamo/', title: 'La Polisportiva', text: 'Chi siamo, la nostra storia, il consiglio direttivo e i documenti principali.' },
+  { href: '/impianti/', title: 'Impianti e Attività', text: 'Campi, spogliatoi, attività praticate, orari e come usare le strutture.' },
+  { href: '/casa-del-giovane/', title: 'Casa del Giovane', text: 'La struttura Giorgio Deiana: sport, cultura, solidarietà e comunità.' },
+];
+---
+
+<BaseLayout title={`${site.name} — Home`} description={site.description}>
+  <Hero />
+
+  <section class="section section--after-hero">
+    <div class="container">
+      <div class="grid grid--3">
+        {pillars.map((p) => (
+          <a class="pillar" href={p.href}>
+            <h2>{p.title}</h2>
+            <p>{p.text}</p>
+            <span class="pillar-link">Scopri →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <UpcomingEvents />
+  <LatestNews />
+
+  <section class="section cta">
+    <div class="container cta-inner">
+      <h2>Sostieni la Polisportiva</h2>
+      <p>Diventa sponsor, fai una donazione o collabora con noi: insieme aiutiamo i giovani di Fresonara a crescere attraverso lo sport.</p>
+      <a class="btn btn--primary" href="/contatti/">Scopri come aiutarci</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: var(--color-primary);
+  }
+  .pillar h2 {
+    font-size: 1.2rem;
+  }
+  .pillar p {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+  .pillar-link {
+    margin-top: auto;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .cta {
+    background:
+      radial-gradient(900px 400px at 15% 0%, rgba(245, 166, 35, 0.35), transparent 60%),
+      linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    color: #fff;
+  }
+  .cta-inner {
+    text-align: center;
+    max-width: 46rem;
+  }
+  .cta h2 {
+    color: #fff;
+  }
+  .cta p {
+    margin: 1rem auto 1.75rem;
+    max-width: 40rem;
+    opacity: 0.95;
+  }
+  .cta :global(.btn--primary) {
+    background: #fff;
+    color: var(--color-primary-dark);
+  }
+</style>
+

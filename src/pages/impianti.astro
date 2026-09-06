@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import impianti from '../data/impianti.json';
+import attivita from '../data/attivita.json';
+---
+
+<BaseLayout
+  title="Impianti e Attività"
+  description="Campi, spogliatoi, palestra, attività praticate, orari e informazioni per usare le strutture della Polisportiva Fresonara."
+>
+  <section class="page-hero">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Le strutture"
+        title="Impianti e Attività"
+        description="Tutto quello che serve per fare sport a Fresonara: campi, servizi e orari delle discipline praticate."
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Gli spazi" title="Impianti sportivi" />
+      <div class="grid grid--3">
+        {impianti.map((i) => (
+          <div class="card">
+            <div class="panel">
+              <h3>{i.nome}</h3>
+              <p class="type">{i.tipo}</p>
+              <p>{i.descrizione}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <SectionHeading eyebrow="Le discipline" title="Attività e orari" />
+      <div class="grid grid--3">
+        {attivita.map((a) => (
+          <div class="card">
+            <div class="panel">
+              <h3>{a.nome}</h3>
+              <p>{a.descrizione}</p>
+              <ul class="orari">
+                {a.orari.map((o) => (
+                  <li>{o}</li>
+                ))}
+              </ul>
+              <p class="meta"><strong>Età:</strong> {a.fasciaEta}</p>
+              <p class="meta"><strong>Luogo:</strong> {a.luogo}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <SectionHeading eyebrow="Info utili" title="Come usare gli impianti" />
+      <p>Gli impianti sono a disposizione dei soci e delle associazioni del territorio, nel rispetto delle regole di convivenza e sicurezza.</p>
+      <ul>
+        <li><strong>Prenotazione:</strong> gli spazi si prenotano contattando la segreteria negli orari di apertura.</li>
+        <li><strong>Tesseramento:</strong> per l'accesso alle attività è richiesto il tesseramento annuale.</li>
+        <li><strong>Regolamento:</strong> l'uso delle strutture è disciplinato dal regolamento interno, disponibile in sede.</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .type {
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .orari {
+    padding-left: 1.1rem;
+    margin: 0.5rem 0;
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+  .meta {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+</style>
